@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Management Admin Portal Documentation</title>
+    <style>
+        :root {
+            --primary-purple: #2D2D2D;
+            --secondary-purple: #4A4A4A;
+            --primary-orange: #FF4D00;
+            --secondary-orange: #FF6B2B;
+            --light-gray: #F5F5F5;
+            --dark-gray: #1A1A1A;
+            --white: #ffffff;
+            --text-color: #333333;
+            --accent-blue: #0066FF;
+            --section-bg: #FAFAFA;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-gray);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        header {
+            background: var(--primary-purple);
+            color: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .logo {
+            height: 60px;
+            filter: brightness(0) invert(1);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-purple);
+            text-align: center;
+            padding-top: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--primary-purple);
+            border-bottom: none;
+            padding-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--secondary-purple);
+            font-weight: 500;
+        }
+        
+        h4 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0;
+            color: var(--primary-orange);
+            font-weight: 500;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+        
+        .sidebar li {
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar a {
+            text-decoration: none;
+            color: var(--primary-purple);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 0.5rem 0;
+        }
+        
+        .sidebar a:hover {
+            color: var(--primary-orange);
+            transform: translateX(5px);
+        }
+        
+        .content {
+            background-color: var(--white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+        
+        .feature-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--section-bg);
+            border-radius: 12px;
+        }
+        
+        .two-col {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .highlight {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-orange);
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-orange);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 77, 0, 0.2);
+        }
+        
+        footer {
+            background: var(--primary-purple);
+            color: var(--white);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .highlight img {
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: relative;
+                top: 0;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 2rem;
+            }
+            
+            .feature-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container logo-container">
+            <img src="https://cdn.prod.website-files.com/62e2a0383b26fad64af677b9/62e2a0383b26fa2cf8f677e7_Monkmantra.svg" alt="Monk Mantra Logo" class="logo">
+            <h2 style="color: white; border: none; margin: 0;">Monk Clinic Management System</h2>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1>Clinic Management System Admin Portal Documentation</h1>
+        
+        <div class="two-col">
+            <aside class="sidebar">
+                <h3 style="margin-top: 0;">Table of Contents</h3>
+                <ul>
+                    <li><a href="#product-description">Product Description</a></li>
+                    <li><a href="#detailed-features">Detailed Features List</a></li>
+                    <li><a href="#system-architecture">System Architecture</a></li>
+                    <li><a href="#user-guide">User Guide</a></li>
+                    <li><a href="#technical-specs">Technical Specifications</a></li>
+                </ul>
+                
+                <div class="highlight">
+                    <h4 style="margin-top: 0;">Need Help?</h4>
+                    <p>Contact our support team for assistance with the admin portal.</p>
+                    <p>Email: <a href="mailto:arun@monkmantra.com">arun@monkmantra.com</a></p>
+                    <p>Phone: <a href="tel:+919845860005">+91-9845860005</a></p>
+                    <a href="#" class="btn">Contact Support</a>
+                </div>
+            </aside>
+            
+            <main class="content">
+                <section id="product-description">
+                    <h2>Product Description</h2>
+                    <p>The <strong>Monk Clinic Management System - Admin Portal</strong> is a comprehensive, web-based solution meticulously engineered for the unique operational demands of sports orthopedic practices. This powerful platform equips administrators, medical staff, and doctors with an intuitive and integrated suite of tools to streamline every facet of clinic management. From sophisticated appointment scheduling and dynamic doctor coordination to insightful reporting and secure data handling, the system is designed to enhance efficiency, improve patient care coordination, and support the growth of your specialized practice.</p>
+                    
+                    <h3>Key Benefits</h3>
+                    <ul>
+                        <li><strong>Streamlined Operations:</strong> Centralizes appointment booking, multi-doctor schedule coordination, and real-time availability tracking, significantly reducing administrative overhead.</li>
+                        <li><strong>Enhanced Efficiency:</strong> Intuitive user interface minimizes training time and accelerates daily tasks for all staff members.</li>
+                        <li><strong>Improved Patient Management:</strong> Secure and organized patient data management ensures quick access to information and supports better patient care. (Note: This portal focuses on admin-side; patient-specific clinical data management might be a separate, integrated module or system).</li>
+                        <li><strong>Data-Driven Decisions:</strong> Comprehensive reporting and analytics provide valuable insights into clinic performance, enabling informed decision-making.</li>
+                        <li><strong>Scalability & Customization:</strong> Designed to adapt to the specific needs and growth of sports orthopedic clinics, including management of multiple specialists and complex scheduling.</li>
+                        <li><strong>Secure & Reliable:</strong> Built with security best practices to protect sensitive data, featuring multi-user access with robust role-based permissions.</li>
+                        <li><strong>Content Control:</strong> Enables easy updates to linked patient-facing website content, ensuring information is always current.</li>
+                    </ul>
+
+                    <h3>Target Audience</h3>
+                    <p>This Admin Portal is specifically designed for use by various roles within a sports orthopedic clinic, including:</p>
+                    <ul>
+                        <li><strong>Clinic Administrators & Managers:</strong> For overseeing daily operations, managing staff schedules, configuring system settings, and generating performance reports.</li>
+                        <li><strong>Receptionists & Front Desk Staff:</strong> For managing patient appointments, coordinating doctor schedules, handling patient inquiries, and updating patient information.</li>
+                        <li><strong>Doctors & Specialists:</strong> For viewing their schedules, managing their availability, and potentially accessing summarized patient appointment details. (Direct EMR/EHR functionalities are typically separate but can be integrated).</li>
+                        <li><strong>Billing & Accounts Staff:</strong> For accessing appointment data relevant to billing, tracking doctor fees, and potentially integrating with billing software.</li>
+                    </ul>
+
+                    <h3>Competitive Advantages</h3>
+                    <ul>
+                        <li><strong>Specialization for Sports Orthopedics:</strong> Tailored workflows and features address the specific needs of sports medicine, such as managing diverse specialist schedules, specific appointment types, and equipment/room coordination (if applicable).</li>
+                        <li><strong>User-Centric Design:</strong> Focus on an intuitive and easy-to-learn interface reduces the learning curve and improves staff adoption and productivity.</li>
+                        <li><strong>Comprehensive Feature Set:</strong> Offers a wide range of integrated tools, minimizing the need for multiple disparate software solutions.</li>
+                        <li><strong>Real-Time Information Flow:</strong> Ensures all users have access to up-to-date information on schedules, appointments, and doctor availability, reducing conflicts and miscommunication.</li>
+                        <li><strong>Robust Reporting Engine:</strong> Provides deeper insights into clinic operations than generic scheduling tools, enabling proactive management and strategic planning.</li>
+                        <li><strong>Scalable Architecture:</strong> Built to accommodate the growth of the clinic, whether it's adding more doctors, services, or locations.</li>
+                        <li><strong>Integration Capabilities (Implied):</strong> Designed with the potential to integrate with other essential clinic systems like EMR/EHRs, patient portals, and billing systems, creating a more unified digital ecosystem.</li>
+                    </ul>
+                    
+                    <p>The system features an intuitive interface that reduces training time while increasing operational efficiency. It's designed to handle the specific needs of sports orthopedic clinics, including managing multiple specialists, complex scheduling requirements, and detailed patient tracking (within the scope of appointment management and scheduling).</p>
+                </section>
+                
+                <section id="detailed-features" class="feature-section">
+                    <h2>Detailed Features List</h2>
+                    
+                    <h3>1. User Authentication</h3>
+                    <p>Ensures secure access to the admin portal, protecting sensitive clinic and patient data. Only authorized personnel can access the system based on their assigned credentials.</p>
+                    <ul>
+                        <li><strong>Secure Login:</strong> Users authenticate using a unique email address and a strong password. Password policies (e.g., minimum length, complexity) are enforced.</li>
+                        <li><strong>Session Management:</strong> Secure sessions are established upon login and automatically time out after a period of inactivity to prevent unauthorized access from unattended terminals.</li>
+                        <li><strong>Logout Functionality:</strong> Users can securely end their session at any time.</li>
+                        <li><strong>Password Protection & Recovery:</strong> Implied by login requirements, with a secure mechanism for users to reset forgotten passwords (e.g., via email link).</li>
+                        <li><strong>Role-Based Access Control (RBAC) Integration:</strong> While managed under System Configuration, authentication works in tandem with RBAC to determine what features a user can access post-login.</li>
+                    </ul>
+                    
+                    <h3>2. Dashboard</h3>
+                    <p>The central landing page after login, providing an at-a-glance overview of critical clinic operations and quick access to common tasks. It helps administrators and staff quickly assess the current status and prioritize actions.</p>
+                    <ul>
+                        <li><strong>Summary Statistics Cards:</strong> Visually prominent cards displaying key metrics such as:
+                            <ul>
+                                <li>Today's Appointments: Scheduled, Confirmed, Completed, Cancelled, No Shows.</li>
+                                <li>Upcoming Appointments: Count for the next 24/48 hours.</li>
+                                <li>Doctor Availability: Quick view of doctors currently on duty or with upcoming availability.</li>
+                                <li>Open Tasks/Notifications: Alerts requiring attention.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Quick Action Shortcuts:</strong> Buttons or links for immediate navigation to high-frequency tasks like "Book New Appointment," "Add New Doctor," "View Today's Schedule," or "Generate Daily Report."</li>
+                        <li><strong>Recent Activity Feed:</strong> A chronological log of important system events or actions performed by users, providing transparency and an audit trail (e.g., "Dr. Smith's schedule updated," "New patient registered," "Appointment ID 123 cancelled").</li>
+                        <li><strong>Visual Overview of Clinic Operations:</strong> May include charts or graphs for key performance indicators (KPIs) like appointment booking trends, doctor utilization rates, or revenue snapshots for the current day/week.</li>
+                        <li><strong>Customizable Widgets (Optional):</strong> Users might be able to customize the dashboard by adding, removing, or rearranging widgets to suit their specific roles and preferences.</li>
+                    </ul>
+                    
+                    <h3>3. Appointment Management</h3>
+                    <p>A comprehensive module for efficiently scheduling, tracking, and managing all patient appointments. This is a core function for smooth clinic operations and optimal patient flow.</p>
+                    
+                    <h4>Calendar View</h4>
+                    <p>Provides a visual, interactive calendar for managing appointments, offering multiple perspectives on schedules.</p>
+                    <ul>
+                        <li><strong>Multiple Views:</strong> Switch between Monthly, Weekly, and Daily views to suit different planning needs. Doctor-specific views might also be available.</li>
+                        <li><strong>Color-Coded Appointment Statuses:</strong> Appointments are visually distinguished by color based on their status (e.g., Blue for Scheduled, Green for Confirmed, Gray for Completed, Red for Cancelled, Orange for No Show), allowing for quick visual assessment.</li>
+                        <li><strong>Click-to-View/Edit Details:</strong> Clicking on an appointment block opens a modal or panel with detailed information and options to edit or update status.</li>
+                        <li><strong>Drag-and-Drop Rescheduling (Optional):</strong> If supported, appointments might be rescheduled by dragging and dropping them to a new time slot or day (subject to availability and validation).</li>
+                        <li><strong>Doctor Filtering:</strong> Ability to view the calendar for all doctors or filter by specific doctors.</li>
+                        <li><strong>Availability Highlighting:</strong> Clearly indicates available vs. booked slots, and may show doctor-specific working hours or unavailability.</li>
+                    </ul>
+                    
+                    <h4>List View</h4>
+                    <p>Offers a tabular display of appointments, suitable for detailed review, sorting, and filtering of large numbers of appointments.</p>
+                    <ul>
+                        <li><strong>Sortable & Filterable Table:</strong> Columns for patient name, doctor, date/time, status, etc., can be sorted. Advanced filtering options by date range, doctor, status, patient name, or appointment type.</li>
+                        <li><strong>Pagination Controls:</strong> Efficiently manages large datasets by displaying appointments in manageable pages.</li>
+                        <li><strong>Status Filtering:</strong> Quick filters to view only appointments of a specific status (e.g., all "Scheduled" or all "Cancelled").</li>
+                        <li><strong>Bulk Actions (Optional):</strong> May allow selecting multiple appointments to perform bulk actions like changing status or sending batch notifications.</li>
+                        <li><strong>Export Options:</strong> Ability to export the appointment list (e.g., to CSV or PDF) for external reporting or analysis.</li>
+                    </ul>
+                    
+                    <h4>Appointment Operations</h4>
+                    <p>Core functions for managing the lifecycle of an appointment.</p>
+                    <ul>
+                        <li><strong>Create New Appointments:</strong> Intuitive forms to capture patient details, select doctor, service, date/time, and add relevant notes. System checks for doctor availability and potential conflicts.</li>
+                        <li><strong>Edit Existing Appointments:</strong> Modify details of previously booked appointments, such as time, date, patient information, or assigned doctor (with appropriate validation).</li>
+                        <li><strong>Update Appointment Statuses:</strong> Manually or automatically update statuses through the workflow: Scheduled → Confirmed → Checked-In → Completed / Cancelled / No Show.</li>
+                        <li><strong>View Appointment Details:</strong> Comprehensive view including patient contact, appointment history (if applicable), notes, and assigned doctor.</li>
+                        <li><strong>Quick Booking from Calendar:</strong> Ability to click on an available time slot in the calendar view to initiate the booking process.</li>
+                        <li><strong>Recurring Appointments (Optional):</strong> Functionality to book a series of appointments for treatments requiring multiple sessions.</li>
+                        <li><strong>Automated Reminders & Notifications:</strong> System can send automated email or SMS reminders to patients for upcoming appointments and notifications for confirmations or cancellations.</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <img src="deepseek_mermaid_20250508_580232.svg" alt="Status Workflow Visualization Diagram" style="width: 100%; max-width: 312px;">
+                    </div>
+                    
+                    <h3>4. Doctor Management</h3>
+                    <p>Allows administrators to manage profiles, specialties, and fees for all doctors in the clinic. This ensures accurate information for scheduling, patient reference, and billing.</p>
+                    
+                    <h4>Doctor Profiles</h4>
+                    <p>Centralized repository for all doctor-related information.</p>
+                    <ul>
+                        <li><strong>Create New Doctor Profiles:</strong> Form to add new doctors with fields for full name, contact details (email, phone), address, qualifications, biography/description, and association with a system user account.</li>
+                        <li><strong>Edit Existing Profiles:</strong> Ability to update any information in a doctor's profile as needed.</li>
+                        <li><strong>View All Doctors:</strong> A list view displaying all registered doctors with key information and options to view/edit individual profiles.</li>
+                        <li><strong>Search and Filter Functionality:</strong> Easily find doctors by name, specialty, or other criteria.</li>
+                        <li><strong>Photo Upload Capability:</strong> Option to upload a professional photo for each doctor, visible in their profile and potentially on the patient-facing portal.</li>
+                        <li><strong>Status Management:</strong> Ability to set a doctor's status (e.g., Active, Inactive, On Leave) which can affect their visibility in scheduling.</li>
+                    </ul>
+                    
+                    <h4>Specialty Management</h4>
+                    <p>Organizes doctors by their medical specialties for easier patient matching and referral.</p>
+                    <ul>
+                        <li><strong>Specialty Assignment:</strong> Assign one or more predefined specialties to each doctor (e.g., Orthopedic Surgery, Sports Medicine, Physiotherapy). A master list of specialties can be managed.</li>
+                        <li><strong>Filter by Specialty:</strong> Patients or admin staff can filter doctors based on specialty when searching for an appropriate practitioner.</li>
+                    </ul>
+                    
+                    <h4>Fee Management</h4>
+                    <p>Manages consultation fees and other service charges associated with each doctor.</p>
+                    <ul>
+                        <li><strong>Set Consultation Fees:</strong> Define standard consultation fees for each doctor. Fees might vary based on appointment type or service.</li>
+                        <li><strong>View Fee Information:</strong> Easily accessible fee information for administrative and billing purposes.</li>
+                        <li><strong>Fee History (Optional):</strong> Track changes to a doctor's fees over time.</li>
+                    </ul>
+                    
+                    <h3>5. Schedule Management</h3>
+                    <p>Provides tools to define and manage working hours, availability, and special non-working days for doctors, ensuring the appointment booking system reflects accurate availability.</p>
+                    
+                    <h4>Doctor Schedules</h4>
+                    <p>Configuration of regular working patterns for each doctor.</p>
+                    <ul>
+                        <li><strong>Weekly Schedule Configuration:</strong> Intuitive interface to set up a recurring weekly schedule, defining working days and hours (e.g., Mon-Fri, 9 AM - 5 PM).</li>
+                        <li><strong>Working Hours Setup:</strong> Specify start and end times for each working day.</li>
+                        <li><strong>Appointment Slot Duration:</strong> Define the standard length of appointment slots (e.g., 15, 30, 45, 60 minutes). This can be a global setting or configurable per doctor/service.</li>
+                        <li><strong>Buffer Time Between Appointments:</strong> Option to automatically add buffer time (e.g., 5-10 minutes) between appointments for preparation or changeover.</li>
+                        <li><strong>Break Time Configuration:</strong> Ability to schedule regular breaks within the working day (e.g., lunch break from 1 PM - 2 PM).</li>
+                        <li><strong>Day Activation/Deactivation:</strong> Easily mark specific days of the week as active (working) or inactive (non-working) for a doctor.</li>
+                        <li><strong>Copy Schedule (Optional):</strong> Ability to copy an existing schedule setup to another doctor or week to save time.</li>
+                    </ul>
+                    
+                    <h4>Special Dates & Unavailability</h4>
+                    <p>Manages exceptions to regular schedules, such as holidays, vacations, or special clinic events.</p>
+                    <ul>
+                        <li><strong>Clinic-Wide Special Dates:</strong> Define dates when the entire clinic is closed or has modified hours (e.g., public holidays, staff training days). These override individual doctor schedules.</li>
+                        <li><strong>Doctor-Specific Special Dates:</strong> Manage individual doctor unavailability for vacations, conferences, personal leave, etc. These block out specific time slots or entire days for that doctor only.</li>
+                        <li><strong>All-Day or Partial-Day Events:</strong> Specify if the special date applies to the entire day or only a portion of it.</li>
+                        <li><strong>Multi-Day Events:</strong> Support for scheduling unavailability that spans multiple consecutive days.</li>
+                        <li><strong>Recurring Unavailability (Optional):</strong> Set up recurring non-working times, e.g., a doctor is unavailable every second Tuesday afternoon.</li>
+                        <li><strong>Reason for Unavailability:</strong> Option to add a note or reason for the special date (e.g., "Annual Conference").</li>
+                    </ul>
+                    
+                    <h3>6. Content Management (CMS Lite)</h3>
+                    <p>Basic tools for managing informational content displayed on a connected patient-facing website or portal, allowing staff to make updates without needing technical expertise.</p>
+                    <ul>
+                        <li><strong>Website Content Editing (Basic):</strong> Ability to edit text on key informational pages such as "About Us," "Services Offered," "Contact Information," or doctor bios. May use a simple WYSIWYG editor.</li>
+                        <li><strong>Image Gallery Management:</strong> Upload, organize, and display images for the clinic, staff, or facilities.</li>
+                        <li><strong>Dynamic Content Updates:</strong> Changes made in the admin portal reflect on the patient portal in real-time or after a short delay.</li>
+                        <li><strong>News/Announcements (Optional):</strong> A section to post clinic news, updates, or health tips.</li>
+                    </ul>
+                    
+                    <h3>7. Analytics & Reporting</h3>
+                    <p>Provides insights into clinic performance, operational efficiency, and financial trends through various reports and data visualizations.</p>
+                    <ul>
+                        <li><strong>Appointment Statistics:</strong> Reports on appointment volume, types of appointments, peak booking times, and fill rates. Filterable by date range, doctor, status.</li>
+                        <li><strong>Doctor Utilization Reports:</strong> Analysis of how effectively doctors' scheduled time is being used, including percentage of booked slots vs. available slots.</li>
+                        <li><strong>Cancellation/No-Show Rates:</strong> Track the frequency of cancellations and no-shows, which can help identify patterns or areas for improvement in patient communication or scheduling policies. Filterable by doctor or reason (if captured).</li>
+                        <li><strong>Revenue Tracking (Implied by Fee Management):</strong> Reports on generated revenue based on completed appointments and doctor fees. May include breakdowns by doctor, service, or time period.</li>
+                        <li><strong>Patient Demographics (If patient data is detailed):</strong> Reports on patient age groups, location, or other relevant demographic data (subject to privacy regulations).</li>
+                        <li><strong>Customizable Report Parameters:</strong> Ability to define date ranges, select specific doctors, or apply other filters to generate targeted reports.</li>
+                        <li><strong>Data Export:</strong> Option to export report data (e.g., to CSV, Excel, PDF) for further analysis or offline use.</li>
+                        <li><strong>Visual Dashboards for Reports:</strong> Key reports may be presented with charts and graphs for easier interpretation of trends and patterns.</li>
+                    </ul>
+                    
+                    <h3>8. System Configuration & User Management</h3>
+                    <p>Centralized control over system-wide settings, user accounts, and permissions, typically accessible only to administrators.</p>
+                    <ul>
+                        <li><strong>Clinic Settings:</strong> Manage core clinic information: name, address, phone numbers, email, website URL, operating hours, and logo for branding.</li>
+                        <li><strong>User Management:</strong>
+                            <ul>
+                                <li>Create, edit, and deactivate user accounts for staff members.</li>
+                                <li>Assign roles (e.g., Administrator, Receptionist, Doctor, Nurse) to users.</li>
+                                <li>Reset passwords for users if needed.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Role-Based Access Control (RBAC):</strong> Define permissions for each role, specifying what modules, features, and data users in that role can access or modify. (e.g., Receptionists can manage appointments but not system settings).</li>
+                        <li><strong>System Preferences:</strong> Configure system-wide preferences such as default appointment duration, date/time formats, notification settings, and integrations with third-party services (e.g., email, payment gateways).</li>
+                        <li><strong>Audit Logs (Optional):</strong> Detailed logs of all significant actions performed within the system, including user logins, data modifications, and setting changes, for security and accountability.</li>
+                        <li><strong>Notification Template Management:</strong> Customize the content of automated email/SMS notifications sent to patients and staff (e.g., appointment reminders, confirmations, cancellations).</li>
+                        <li><strong>Specialty List Management:</strong> Add, edit, or remove medical specialties available for assignment to doctors.</li>
+                    </ul>
+                </section>
+                
+                <section id="system-architecture">
+                    <h2>System Architecture</h2>
+                    <p>The Monk Clinic Management System employs a modern, multi-tier architecture designed for scalability, reliability, and maintainability. This architecture separates concerns into distinct layers, allowing for independent development, scaling, and updating of each component.</p>
+
+                    <h3>Architectural Diagram</h3>
+                    <div class="highlight">
+                        <img src="deepseek_mermaid_20250508_d590bc.svg" alt="System Architecture Diagram" style="width: 100%; max-width: 1050px;">
+                        <p style="text-align: center; margin-top: 1rem; font-style: italic;">Diagram illustrating the interaction between Client, Presentation, Application, Data, and Integration layers.</p>
+                    </div>
+
+                    <h3>Code Structure Overview (Conceptual)</h3>
+                    <div class="highlight">
+                        <p>While the specific codebase is proprietary, a typical high-level structure might follow a pattern like this (example using a generic MVC-like pattern):</p>
+                        <pre style="background-color: #f0f0f0; padding: 1rem; border-radius: 8px; font-size: 0.9em; overflow-x: auto;">
+/project-root
+  /app
+    /Http
+      /Controllers     # Handles incoming HTTP requests (e.g., AppointmentController, DoctorController)
+      /Middleware      # Request filtering (e.g., AuthMiddleware)
+    /Models            # Data representation and database interaction (e.g., Appointment, Doctor)
+    /Services          # Business logic services (e.g., SchedulingService, NotificationService)
+    /Repositories      # Data access layer (optional, for complex queries)
+  /config              # Configuration files (database, services, API keys)
+  /database
+    /migrations        # Database schema changes
+    /seeders           # Default data seeding
+  /public              # Publicly accessible assets (JS, CSS, images - often managed by build tools)
+    /index.html        # Entry point for the SPA (if applicable)
+  /resources
+    /views             # Server-side templates (if not a full SPA)
+    /lang              # Language files for localization
+  /routes              # API and web route definitions
+  /tests               # Automated tests (unit, integration, feature)
+  /node_modules        # Frontend dependencies (if Node.js used for frontend build)
+  /vendor              # Backend dependencies (e.g., Composer packages for PHP)
+.env                   # Environment variables
+Dockerfile             # (If containerized)
+compose.yaml           # (If using Docker Compose)
+                        </pre>
+                        <p style="font-style: italic; margin-top: 0.5rem;">This is a generalized representation. The actual structure may vary based on the chosen framework and architectural patterns (e.g., DDD, Hexagonal Architecture).</p>
+                    </div>
+                    
+                    <h3>Architecture Components</h3>
+                    
+                    <h4>1. Client Layer (User Interface)</h4>
+                    <p>This is the interface through which users interact with the system. It is designed to be intuitive and responsive.</p>
+                    <ul>
+                        <li><strong>Web Browsers:</strong> Accessed via modern web browsers such as Chrome, Firefox, Safari, and Edge.</li>
+                        <li><strong>Technology Stack:</strong> Built using HTML5, CSS3, and JavaScript (ES6+). May utilize a frontend framework/library like React, Angular, or Vue.js for a rich, single-page application (SPA) experience or a more traditional multi-page application (MPA) with server-side rendering.</li>
+                        <li><strong>Responsive Design:</strong> Ensures a seamless experience on desktops and tablets, adapting layout and functionality to different screen sizes.</li>
+                        <li><strong>Local Storage/Cache:</strong> Browser capabilities might be used for caching static assets or temporarily storing non-sensitive application state to improve performance and user experience.</li>
+                    </ul>
+                    
+                    <h4>2. Presentation Layer (Web/API Gateway)</h4>
+                    <p>This layer handles incoming client requests, routing them to the appropriate application services, and managing static asset delivery. It acts as the entry point to the backend system.</p>
+                    <ul>
+                        <li><strong>Web Server (e.g., Nginx, Apache):</strong> Serves static files (HTML, CSS, JavaScript, images) and acts as a reverse proxy to the application servers.</li>
+                        <li><strong>Load Balancer (If applicable for scaling):</strong> Distributes incoming traffic across multiple instances of the application server to ensure high availability and performance. (As shown in the diagram).</li>
+                        <li><strong>API Gateway:</strong> Manages API requests, potentially handling concerns like request/response transformation, rate limiting, and initial authentication/authorization steps before forwarding to the application layer.</li>
+                        <li><strong>SSL/TLS Termination:</strong> Encrypts and decrypts HTTPS traffic, offloading this task from the application servers.</li>
+                    </ul>
+                    
+                    <h4>3. Application Layer (Business Logic)</h4>
+                    <p>The core of the system, containing all the business logic, processing, and coordination required to fulfill user requests and manage clinic operations.</p>
+                    <ul>
+                        <li><strong>Core Business Logic:</strong> Implements all functionalities related to appointment scheduling, doctor management, schedule configuration, reporting, etc.</li>
+                        <li><strong>API Endpoints:</strong> Exposes RESTful APIs that the client layer consumes to interact with the system. Each endpoint corresponds to a specific function or data resource.</li>
+                        <li><strong>Authentication & Authorization Service:</strong> Verifies user credentials and enforces role-based access control (RBAC) to ensure users only access permitted data and features.</li>
+                        <li><strong>Data Processing & Validation:</strong> Handles data manipulation, validation of inputs, and orchestration of calls to the data layer or integration services.</li>
+                        <li><strong>Service Layer:</strong> Often organized into services (e.g., `AppointmentService`, `NotificationService`) that encapsulate specific business operations.</li>
+                        <li><strong>Workflow Management:</strong> Manages complex processes, such as the lifecycle of an appointment from booking to completion.</li>
+                    </ul>
+                    
+                    <h4>4. Data Layer (Persistence & Storage)</h4>
+                    <p>Responsible for the persistent storage and retrieval of all application data.</p>
+                    <ul>
+                        <li><strong>Relational Database (RDBMS):</strong> The primary storage for structured data like doctor profiles, appointments, schedules, user accounts, and configurations. Examples: PostgreSQL, MySQL. (As shown as "Database Cluster" in the diagram).</li>
+                        <li><strong>ORM/Data Access Libraries:</strong> Utilizes Object-Relational Mappers (e.g., SQLAlchemy for Python, Eloquent for Laravel, TypeORM for Node.js) or other data access libraries to interact with the database in an object-oriented or structured way.</li>
+                        <li><strong>File Storage:</strong> Manages unstructured data such as doctor photos, uploaded documents, or generated report files. This could be a local filesystem or a cloud-based solution like AWS S3 or Google Cloud Storage. (As shown as "File Storage" in the diagram).</li>
+                        <li><strong>Cache Layer (e.g., Redis, Memcached):</strong> Stores frequently accessed data in memory to reduce database load and improve response times for common queries. (As shown as "Redis Cache" in the diagram, connected to the Database Cluster).</li>
+                        <li><strong>Database Backups & Replication:</strong> Regular backups and potentially replication strategies are in place for data durability and disaster recovery.</li>
+                    </ul>
+                    
+                    <h4>5. Integration Layer (External Services)</h4>
+                    <p>Facilitates communication with external third-party services that extend the system's functionality.</p>
+                    <ul>
+                        <li><strong>Email Service:</strong> Integrates with services like SendGrid, Mailgun, or AWS SES for sending transactional emails (appointment reminders, notifications, password resets).</li>
+                        <li><strong>Payment Processing Integration (Implied/Future):</strong> Potential integration with payment gateways (e.g., Stripe, PayPal) to handle online payments for consultations or services. (As shown as "Payment Gateway" in the diagram).</li>
+                        <li><strong>Calendar Integration (Implied/Future):</strong> Potential for syncing clinic schedules with external calendar applications (e.g., Google Calendar, Outlook Calendar) via APIs or iCal feeds.</li>
+                        <li><strong>SMS Gateway (Optional):</strong> Integration for sending SMS notifications to patients.</li>
+                        <li><strong>Analytics Services (Optional):</strong> May send anonymized data to external analytics platforms for more advanced business intelligence.</li>
+                    </ul>
+                </section>
+                
+                <section id="user-guide">
+                    <h2>User Guide</h2>
+                    <p>The system includes comprehensive user documentation as shown in the HTML file, covering:</p>
+                    
+                    <h3>Getting Started</h3>
+                    <ul>
+                        <li><strong>System Login/Logout Procedures:</strong>
+                            <ul>
+                                <li>To log in, navigate to the admin portal URL provided by your system administrator.</li>
+                                <li>Enter your registered email address and password in the respective fields.</li>
+                                <li>Click the "Login" button. Upon successful authentication, you will be directed to the dashboard.</li>
+                                <li>To log out, click on your profile icon or name, usually located in the top-right corner, and select "Logout" from the dropdown menu.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Dashboard Orientation:</strong>
+                            <ul>
+                                <li>The dashboard provides a quick overview of key clinic metrics and activities.</li>
+                                <li><strong>Summary Cards:</strong> Display real-time counts of today's appointments (Scheduled, Confirmed, Completed, Cancelled).</li>
+                                <li><strong>Quick Actions:</strong> Buttons or links for frequently performed tasks like "Book New Appointment" or "Add New Doctor".</li>
+                                <li><strong>Recent Activity Feed:</strong> Shows a log of recent important actions within the system.</li>
+                                <li><strong>Navigation Menu:</strong> Typically located on the left sidebar or top bar, allowing access to all system modules (Appointments, Doctors, Schedules, etc.).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Basic Navigation:</strong>
+                            <ul>
+                                <li>Utilize the main navigation menu to switch between different sections of the portal.</li>
+                                <li>Breadcrumbs, if available, can help you understand your current location within the portal's hierarchy.</li>
+                                <li>Most lists (e.g., appointments, doctors) will feature search and filter options to help you find specific information quickly.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <h3>Core Workflows</h3>
+                    <ul>
+                        <li><strong>Appointment Lifecycle Management:</strong>
+                            <ol>
+                                <li><strong>Booking an Appointment:</strong> Navigate to "Appointments" > "Calendar View" or use a "Book Appointment" quick action. Select the desired doctor, date, and time slot. Fill in patient details and any relevant notes. Confirm to save the appointment. The status will initially be "Scheduled".</li>
+                                <li><strong>Confirming an Appointment:</strong> Locate the scheduled appointment. Change its status to "Confirmed" (this might involve an automated or manual patient confirmation step).</li>
+                                <li><strong>Managing Check-ins and Check-outs:</strong> As patients arrive, update their appointment status (e.g., "Checked-in"). After the consultation, mark the appointment as "Completed".</li>
+                                <li><strong>Handling Cancellations/No-Shows:</strong> If a patient cancels, update the status to "Cancelled". If a patient does not arrive, mark as "No Show". These actions often free up the time slot.</li>
+                            </ol>
+                        </li>
+                        <li><strong>Doctor Profile Maintenance:</strong>
+                            <ol>
+                                <li><strong>Adding a New Doctor:</strong> Go to "Doctor Management" > "Add New Doctor". Fill in their personal details, specializations, contact information, consultation fees, and upload a profile picture.</li>
+                                <li><strong>Editing Existing Doctor Profile:</strong> Find the doctor in the "View All Doctors" list. Click "Edit" to update their information, including availability and fees.</li>
+                                <li><strong>Deactivating/Archiving a Doctor:</strong> If a doctor is no longer with the clinic, there might be an option to deactivate their profile (rather than delete, to preserve historical data).</li>
+                            </ol>
+                        </li>
+                        <li><strong>Schedule Configuration:</strong>
+                            <ol>
+                                <li>Navigate to "Schedule Management" for the specific doctor.</li>
+                                <li>Set up their regular weekly working hours, including start time, end time, and days of the week they are available.</li>
+                                <li>Define standard appointment slot durations (e.g., 30 minutes, 1 hour).</li>
+                                <li>Configure buffer times between appointments if needed, and schedule regular breaks (e.g., lunch).</li>
+                                <li>Activate or deactivate specific days as needed.</li>
+                            </ol>
+                        </li>
+                        <li><strong>Special Date Handling:</strong>
+                            <ol>
+                                <li><strong>Clinic-Wide Holidays:</strong> In "System Configuration" or a dedicated "Special Dates" section, add public holidays or clinic-wide closure dates. These will typically block out all doctors' schedules.</li>
+                                <li><strong>Doctor-Specific Unavailability:</strong> For individual doctor vacations or conference attendance, navigate to their specific schedule and add these special dates/times. This will override their regular availability.</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    
+                    <h3>Advanced Features</h3>
+                    <ul>
+                        <li><strong>Bulk Operations:</strong>
+                            <ul>
+                                <li>The system may allow bulk updating of appointment statuses (e.g., confirming multiple appointments at once).</li>
+                                <li>Bulk import/export of data (e.g., patient lists, doctor details) might be available, often in CSV format.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Reporting & Analytics:</strong>
+                            <ul>
+                                <li>Access the "Analytics & Reporting" section.</li>
+                                <li>Generate reports on appointment volumes, doctor utilization, cancellation rates, revenue, and patient demographics.</li>
+                                <li>Many reports will offer filtering by date range, doctor, or status.</li>
+                                <li>Data may be exportable for further analysis.</li>
+                            </ul>
+                        </li>
+                        <li><strong>System Configuration & Customization:</strong>
+                            <ul>
+                                <li>Manage clinic-wide settings such as clinic name, address, contact details, and branding (logo).</li>
+                                <li>Administer user accounts, assign roles (e.g., administrator, receptionist, doctor), and manage permissions.</li>
+                                <li>Customize notification templates for appointment reminders or confirmations.</li>
+                                <li>Set up integrations with other services (e.g., payment gateways, external calendars).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                    <h3>Troubleshooting & FAQ</h3>
+                    <ul>
+                        <li><strong>Common Issues:</strong>
+                            <ul>
+                                <li><strong>Unable to log in:</strong> Double-check your email and password. Use the "Forgot Password" link if available. Ensure your account is active.</li>
+                                <li><strong>Appointment slot not available:</strong> Verify the doctor's schedule, including working hours and any special unavailability dates. Check for existing appointments in that slot.</li>
+                                <li><strong>Report generation error:</strong> Ensure you have selected valid parameters (e.g., date range). If the issue persists, note any error messages and contact support.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Support Contacts:</strong>
+                            <ul>
+                                <li>Primary support can be reached via email at <a href="mailto:arun@monkmantra.com">arun@monkmantra.com</a> or by phone at <a href="tel:+919845860005">+91-9845860005</a>.</li>
+                                <li>Refer to the "Need Help?" section in the sidebar for quick contact options.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Error Resolution:</strong>
+                            <ul>
+                                <li>For any system errors, try refreshing the page first.</li>
+                                <li>If an error message is displayed, copy it down as it can help support diagnose the issue.</li>
+                                <li>Clear your browser cache and cookies if persistent display issues occur.</li>
+                            </ul>
+                        </li>
+                         <li><strong>Frequently Asked Questions:</strong>
+                            <ul>
+                                <li><strong>Q: How do I change my password?</strong><br>A: Look for a "Profile Settings" or "Account Management" section, usually accessible from your user icon. You should find an option to change your password there.</li>
+                                <li><strong>Q: Can I sync the clinic calendar with my personal calendar?</strong><br>A: Check the "Integrations" or "Settings" section. If calendar synchronization is supported, instructions will be provided there. This often involves an iCal link or a direct integration with services like Google Calendar or Outlook Calendar.</li>
+                                <li><strong>Q: How is patient data protected?</strong><br>A: The system employs multiple security measures, including secure authentication, role-based access control, and data encryption. For specific compliance details, refer to our security policy or contact support.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                
+                <section id="technical-specs">
+                    <h2>Technical Specifications</h2>
+                    
+                    <h3>Frontend</h3>
+                    <ul>
+                        <li><strong>Markup and Styling:</strong> HTML5, CSS3 (with pre-processors like SASS/LESS if applicable, e.g., for managing variables, mixins, and nested rules for maintainable stylesheets).</li>
+                        <li><strong>JavaScript:</strong> Modern JavaScript (ES6+) for interactivity and dynamic content.</li>
+                        <li><strong>Framework/Library (Examples):</strong> May utilize a component-based framework like React, Angular, or Vue.js for building a modular and maintainable user interface. Alternatively, a library like jQuery might be used for simpler DOM manipulations if a full framework is not employed.</li>
+                        <li><strong>Responsive Design:</strong> Employs responsive design principles (e.g., using CSS Grid, Flexbox, and media queries) to ensure optimal viewing and interaction across various devices (desktops, tablets, and potentially mobile, though primarily designed for desktop/tablet as per architecture).</li>
+                        <li><strong>Accessibility:</strong> Adherence to WCAG (Web Content Accessibility Guidelines) to ensure the portal is usable by people with disabilities (e.g., proper ARIA attributes, keyboard navigation, sufficient color contrast).</li>
+                        <li><strong>Build Tools (Examples):</strong> Webpack, Parcel, or Vite for bundling JavaScript modules, CSS, and other assets, along with Babel for transpiling modern JavaScript for wider browser compatibility.</li>
+                        <li><strong>Browser Compatibility:</strong> Tested and optimized for the latest versions of major browsers (Chrome, Firefox, Safari, Edge).</li>
+                    </ul>
+                    
+                    <h3>Backend</h3>
+                    <ul>
+                        <li><strong>Programming Language (Examples):</strong> PHP (with frameworks like Laravel or Symfony), Node.js (with Express.js or NestJS), Python (with Django or Flask), Ruby (with Ruby on Rails), or Java (with Spring Boot).</li>
+                        <li><strong>Framework:</strong> Utilizes a robust backend framework to handle routing, middleware, ORM (Object-Relational Mapper), and other common web development tasks, promoting rapid development and structured code.</li>
+                        <li><strong>API Design:</strong> RESTful API design for client-server communication, using JSON for data exchange. Endpoints are versioned for maintainability (e.g., /api/v1/...).</li>
+                        <li><strong>Authentication & Authorization:</strong> Token-based authentication (e.g., JWT - JSON Web Tokens) for securing API endpoints. Role-based access control (RBAC) is implemented to ensure users can only access features and data appropriate to their roles.</li>
+                        <li><strong>Server Environment:</strong> Deployed on a web server like Nginx or Apache, or on serverless platforms.</li>
+                    </ul>
+                    
+                    <h3>Database</h3>
+                    <ul>
+                        <li><strong>Type:</strong> Relational Database Management System (RDBMS).</li>
+                        <li><strong>Examples:</strong> MySQL, PostgreSQL, MariaDB, or SQL Server.</li>
+                        <li><strong>Schema Design:</strong> Normalized schema to reduce data redundancy and improve data integrity. Key entities include:
+                            <ul>
+                                <li><code>Users</code> (for system access, with roles)</li>
+                                <li><code>Doctors</code> (profiles, specialties, fees, associated user_id)</li>
+                                <li><code>Schedules</code> (doctor_id, day_of_week, start_time, end_time, slot_duration, buffer_time)</li>
+                                <li><code>Appointments</code> (doctor_id, patient_details, start_time, end_time, status, notes)</li>
+                                <li><code>SpecialDates</code> (doctor_id (nullable for clinic-wide), date, start_time, end_time, description, type (holiday, vacation))</li>
+                                <li><code>ClinicSettings</code> (general clinic information)</li>
+                                <li><code>ContentManagement</code> (for website text, images)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Data Integrity:</strong> Use of foreign keys, constraints, and transactions to ensure data consistency.</li>
+                        <li><strong>Indexing:</strong> Proper indexing on frequently queried columns to optimize query performance.</li>
+                    </ul>
+                    
+                    <h3>Security</h3>
+                    <ul>
+                        <li><strong>Authentication:</strong> Secure password hashing (e.g., bcrypt or Argon2). Multi-Factor Authentication (MFA) capability is recommended.</li>
+                        <li><strong>Authorization:</strong> Robust Role-Based Access Control (RBAC) enforced at the API level.</li>
+                        <li><strong>Data Encryption:</strong>
+                            <ul>
+                                <li><strong>In Transit:</strong> HTTPS/TLS encryption for all data transmitted between client and server.</li>
+                                <li><strong>At Rest:</strong> Encryption of sensitive patient data stored in the database (e.g., using database-level encryption or application-level encryption for specific fields).</li>
+                            </ul>
+                        </li>
+                        <li><strong>Session Management:</strong> Secure session handling, including session timeouts and protection against session hijacking. If using JWT, ensure short-lived access tokens and secure refresh token mechanisms.</li>
+                        <li><strong>Input Validation:</strong> Strict validation of all user inputs on both client-side and server-side to prevent common vulnerabilities like XSS (Cross-Site Scripting) and SQL Injection.</li>
+                        <li><strong>OWASP Top 10:</strong> Regular security audits and adherence to best practices to mitigate risks outlined in the OWASP Top 10.</li>
+                        <li><strong>Logging and Monitoring:</strong> Comprehensive logging of system events, particularly security-related events, for auditing and intrusion detection.</li>
+                    </ul>
+                    
+                    <h3>Deployment</h3>
+                    <ul>
+                        <li><strong>Web Server Requirements:</strong> Nginx or Apache, configured for optimal performance and security (e.g., SSL/TLS termination, HTTP/2).</li>
+                        <li><strong>Application Server:</strong> Appropriate runtime environment for the chosen backend language/framework (e.g., PHP-FPM, Node.js runtime, Gunicorn/uWSGI for Python).</li>
+                        <li><strong>Database Server:</strong> Dedicated or managed database server instance.</li>
+                        <li><strong>File Storage:</strong> Secure and scalable file storage solution (e.g., local filesystem with proper permissions, or cloud-based storage like AWS S3, Google Cloud Storage, Azure Blob Storage) for doctor photos, documents, etc.</li>
+                        <li><strong>Email Service Integration:</strong> Integration with a reliable email service provider (e.g., SendGrid, Mailgun, AWS SES) for transactional emails (notifications, alerts, password resets).</li>
+                        <li><strong>Environment Management:</strong> Separate environments for development, staging/testing, and production. Use of environment variables for configuration.</li>
+                        <li><strong>Backup and Recovery:</strong> Regular automated backups of the database and file storage. A documented disaster recovery plan.</li>
+                        <li><strong>CI/CD (Continuous Integration/Continuous Deployment):</strong> (Optional but recommended) Use of CI/CD pipelines (e.g., Jenkins, GitLab CI, GitHub Actions) for automated testing and deployment.</li>
+                        <li><strong>Containerization (Optional):</strong> Use of Docker and orchestration tools like Kubernetes for easier deployment, scaling, and management.</li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Powered by Monak Mantra. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
